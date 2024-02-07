@@ -2,8 +2,18 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const path = require('path')
 const dotenv = require('dotenv').config();
 
+//Servir arquivos do front
+app.use(express.static(path.join(__dirname, 'build')));
+
+//Rota para servir o index.html (react app)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', '../projeto/public/index.html'));
+})
+
+//Rotas NODE
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
